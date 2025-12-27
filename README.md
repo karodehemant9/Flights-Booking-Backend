@@ -19,6 +19,23 @@ Lets take a look inside the `src` folder
 
  - `utils` -> contains helper methods, error classes etc.
 
+ - `migrations` -> The migrations folder holds database migration scripts — versioned, repeatable changes to your database schema (create/alter/drop tables, add indexes, etc.). Migrations let teams evolve schema safely, apply or rollback changes, and keep schema in sync across environments. They work together with models, seeders, and your repository layer.
+
+Key points
+- Each migration is typically a timestamped file with up (apply) and down (rollback) functions.
+- Managed by tools like Sequelize (sequelize-cli/umzug), Knex, TypeORM, etc.
+- You run them with CLI commands (e.g., npx sequelize-cli db:migrate or npx knex migrate:latest).
+- Keep migrations in source control; never edit already-applied migrations — create a new one to change the schema.
+
+- `Seeders` -> Seeders (seed files) populate the database with initial or sample data (fixtures) — e.g., admin accounts, lookup tables, demo data for development/tests.
+
+Key points
+- Purpose: insert baseline or test data after schema exists (after migrations).
+- Typical contents: idempotent insert/update logic for tables (users, roles, settings).
+- Run via CLI of your migration tool (Sequelize, Knex, TypeORM, etc.).
+- Keep seeders in source control; avoid secrets in seed data.
+- Prefer creating new seeders to modify data instead of editing applied ones.
+
 ### Setup the project
 
  - Download this template from github and open it in your favourite text editor. 
