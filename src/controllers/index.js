@@ -1,4 +1,8 @@
+const CityController = require("./city-controller");
+const InfoController = require("./info-controller");
+const AirplaneController = require("./airplane-controller");
 module.exports = {
-    InfoController: require('./info-controller'),
-    AirplaneController: require('./airplane-controller')
+  InfoController,
+  AirplaneController,
+  CityController,
 };
