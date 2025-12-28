@@ -3,7 +3,7 @@ const { ErrorResponse, SuccessResponse } = require("../utils/common");
 const AppError = require("../utils/errors/app-error");
 
 function validateCreateAirport(req, res, next) {
-  const { name, code, address } = req.body;
+  const { name, code, cityId } = req.body;
   if (!name || typeof name !== "string") {
     ErrorResponse.message = "Invalid or missing 'name'";
     ErrorResponse.error = new AppError(
@@ -16,6 +16,14 @@ function validateCreateAirport(req, res, next) {
     ErrorResponse.message = "Invalid or missing 'code'";
     ErrorResponse.error = new AppError(
       ["Code is required and should be a string"],
+      StatusCodes.BAD_REQUEST
+    );
+    return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
+  }
+  if (!cityId || typeof cityId !== "integer") {
+    ErrorResponse.message = "Invalid or missing 'cityId'";
+    ErrorResponse.error = new AppError(
+      ["cityId is required and should be an integer"],
       StatusCodes.BAD_REQUEST
     );
     return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
