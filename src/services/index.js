@@ -4,5 +4,5 @@ AirportService = require("./airport-service");
 module.exports = {
   AirplaneService,
   CityService,
-  AirportService,
+  AirportService
 };

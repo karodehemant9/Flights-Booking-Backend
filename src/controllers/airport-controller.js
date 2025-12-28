@@ -9,8 +9,10 @@ const { ErrorResponse, SuccessResponse } = require("../utils/common");
 async function createAirport(req, res) {
   try {
     const airport = await AirportService.createAirport({
-      modelNumber: req.body.modelNumber,
-      capacity: req.body.capacity,
+      name: req.body.modelNumber,
+      code: req.body.capacity,
+      address: req.body.address,
+      cityId: req.body.cityId
     });
     SuccessResponse.message = "Successfully created airport";
     SuccessResponse.data = airport;
@@ -72,7 +74,7 @@ async function destroyAirport(req, res) {
  */
 async function updateAirport(req, res) {
   try {
-    const response = await AirportService.updateAirport(req);
+    const response = await AirportService.updateAirport(req.params.id, req.body);
     SuccessResponse.data = response;
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
