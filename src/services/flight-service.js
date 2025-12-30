@@ -92,8 +92,32 @@ async function getFlight(id) {
   }
 }
 
+async function updateSeats(data) {
+  try {
+    const response = await flightRepository.updateRemainingSeats(
+      data.flightId,
+      data.seatsToBeBooked,
+      data.decrease
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+    if (error.statusCode == StatusCodes.NOT_FOUND) {
+      throw new AppError(
+        "The flight you requested to update is not present",
+        error.statusCode
+      );
+    }
+    throw new AppError(
+      "Cannot update data of Flight",
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+}
+
 module.exports = {
   createFlight,
   getAllFlights,
   getFlight,
+  updateSeats,
 };

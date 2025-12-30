@@ -3,7 +3,17 @@ const { ErrorResponse, SuccessResponse } = require("../utils/common");
 const AppError = require("../utils/errors/app-error");
 
 function validateCreateFlight(req, res, next) {
-  const { flightNumber, airplaneId, departureAirportId, arrivalAirportId, arrivalTime, departureTime, price, boardingGate, totalSeats } = req.body;
+  const {
+    flightNumber,
+    airplaneId,
+    departureAirportId,
+    arrivalAirportId,
+    arrivalTime,
+    departureTime,
+    price,
+    boardingGate,
+    totalSeats,
+  } = req.body;
   if (!flightNumber || typeof flightNumber !== "string") {
     ErrorResponse.message = "Something went wrong while creating flight";
     ErrorResponse.error = new AppError(
@@ -79,6 +89,20 @@ function validateCreateFlight(req, res, next) {
   next();
 }
 
+function validateUpdateSeatsRequest(req, res, next) {
+  const { seatsToBeBooked } = req.body;
+  if (!seatsToBeBooked) {
+    ErrorResponse.message = "Something went wrong while updating seats";
+    ErrorResponse.error = new AppError(
+      ["seatsToBeBooked is required"],
+      StatusCodes.BAD_REQUEST
+    );
+    return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
+  }
+  next();
+}
+
 module.exports = {
   validateCreateFlight,
+  validateUpdateSeatsRequest,
 };
